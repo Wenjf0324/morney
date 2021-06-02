@@ -1,7 +1,7 @@
 <template>
   <div class="tags">
     <div class="new">
-      <button>新增标签</button>
+      <button @click="create">新增标签</button>
     </div>
     <ul class="current">
       <li
@@ -22,18 +22,31 @@ import { Component, Prop } from "vue-property-decorator";
 
 @Component
 export default class Tags extends Vue {
-  @Prop() dataSource: string[] | undefined;
+  @Prop(Array) readonly dataSource: string[] | undefined; //只读的属性
   selectedTags: string[] = [];
 
+  //选中或取消 tag
   toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
-
     if (index >= 0) {
       //数组中已存在，取消选中
       this.selectedTags.splice(index, 1);
     } else {
       //选中
       this.selectedTags.push(tag);
+    }
+  }
+
+  //新增标签
+  create() {
+    const name = window.prompt("请输入标签名");
+    if (name === "") {
+      window.alert("标签名不能为空");
+    } else {
+      if (this.dataSource) {
+        // this.dataSource.push(name!); //不能改外部数据
+        this.$emit("update:dataSource", [...this.dataSource, name]);
+      }
     }
   }
 }
