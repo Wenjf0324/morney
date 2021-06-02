@@ -2,7 +2,7 @@
   <Layout class-prefix="layout">
     <tags />
     <notes />
-    <types />
+    <types :xxx="333" />
     <number-pad />
   </Layout>
 </template>
@@ -20,7 +20,6 @@ export default {
 
 <style lang="scss">
 .layout-content {
-  border: 1px solid red;
   display: flex;
   flex-direction: column;
 }

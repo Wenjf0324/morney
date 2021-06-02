@@ -8,21 +8,14 @@
 </template>
 
 <script lang="ts">
-//引入装饰器
-import { Component } from "vue-property-decorator";
 import Vue from "vue";
+//引入装饰器
+import { Component, Prop } from "vue-property-decorator";
 
-@Component({
-  props: {
-    propMessage: String,
-  },
-})
+@Component
 export default class Types extends Vue {
-  //data
   type = "-"; //'-'表示支出，’+‘表示收入
-  helloMsg = "Hello, " + this.propMessage;
 
-  //methods
   selectType(type: string) {
     //type只能是 '-' 和 '+' 中的一个
     if (type !== "-" && type !== "+") {
@@ -31,23 +24,6 @@ export default class Types extends Vue {
     this.type = type;
   }
 }
-// export default {
-//   name: "Types",
-//   data() {
-//     return {
-//       type: "-", //'-'表示支出，’+‘表示收入
-//     };
-//   },
-//   methods: {
-//     selectType(type) {
-//       //type只能是 '-' 和 '+' 中的一个
-//       if (type !== "-" && type !== "+") {
-//         throw new Error("type is unknown");
-//       }
-//       this.type = type;
-//     },
-//   },
-// };
 </script>
 
 <style lang="scss" scoped>
