@@ -13,7 +13,7 @@
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
-      <button class="ok">ok</button>
+      <button @click="ok" class="ok">ok</button>
       <button @click="inputContent" class="zero">0</button>
       <button @click="inputContent">.</button>
     </div>
@@ -63,9 +63,9 @@ export default class NumberPad extends Vue {
     this.output = "0";
   }
 
-  // ok() {
-  //   console.log("ok");
-  // }
+  ok() {
+    this.$emit("update:value", this.output);
+  }
 }
 </script>
 

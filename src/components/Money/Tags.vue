@@ -35,6 +35,7 @@ export default class Tags extends Vue {
       //选中
       this.selectedTags.push(tag);
     }
+    this.$emit("update:value", this.selectedTags);
   }
 
   //新增标签
