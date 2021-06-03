@@ -1,5 +1,6 @@
 <template>
   <Layout class-prefix="layout">
+    {{ recordList }}
     <tags :data-source.sync="tags" @update:value="onUpdateTags" />
     <notes @update:value="onUpdateNotes" />
     <types :value.sync="record.type" />
@@ -20,7 +21,8 @@ type Record = {
   tags: string[];
   notes: string;
   type: string;
-  amount: number;
+  amount: number; //数据类型 object | string
+  createdAt?: Date; // 类(构造函数)  '?'表示可以为空
 };
 
 @Component({
@@ -28,7 +30,9 @@ type Record = {
 })
 export default class Money extends Vue {
   tags = ["衣", "食", "住", "行"];
-  recordList: Record[] = [];
+  recordList: Record[] = JSON.parse(
+    window.localStorage.getItem("recordList") || "[]"
+  );
   record: Record = {
     tags: [],
     notes: "",
@@ -51,7 +55,8 @@ export default class Money extends Vue {
   //保存数据
   saveRecord() {
     //深拷贝
-    const record2 = JSON.parse(JSON.stringify(this.record));
+    const record2: Record = JSON.parse(JSON.stringify(this.record));
+    record2.createdAt = new Date();
     this.recordList.push(record2);
     console.log(this.recordList);
   }
