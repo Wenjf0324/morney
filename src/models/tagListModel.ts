@@ -34,6 +34,7 @@ const tagListModel: TagListModel = {
     return "success";
   },
 
+  //保存数据
   save() {
     window.localStorage.setItem(localStorageKeyName, JSON.stringify(this.data));
   },
