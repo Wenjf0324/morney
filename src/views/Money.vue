@@ -1,6 +1,5 @@
 <template>
   <Layout class-prefix="layout">
-    {{ recordList }}
     <tags :data-source.sync="tags" @update:value="onUpdateTags" />
     <notes @update:value="onUpdateNotes" />
     <types :value.sync="record.type" />
@@ -15,28 +14,23 @@ import Types from "@/components/Money/Types.vue";
 import Notes from "@/components/Money/Notes.vue";
 import Tags from "@/components/Money/Tags.vue";
 import { Component, Watch } from "vue-property-decorator";
+import recordListModel from "@/models/recordListModel";
+import tagListModel from "@/models/tagListModel";
+import { RecordItem } from "@/custom";
 
-//自定义类型
-type Record = {
-  tags: string[];
-  notes: string;
-  type: string;
-  amount: number; //数据类型 object | string
-  createdAt?: Date; // 类(构造函数)  '?'表示可以为空
-};
+const recordList = recordListModel.fetch(); //获取数据
+const tagList = tagListModel.fetch();
 
 @Component({
   components: { NumberPad, Types, Notes, Tags },
 })
 export default class Money extends Vue {
-  tags = ["衣", "食", "住", "行"];
-  recordList: Record[] = JSON.parse(
-    window.localStorage.getItem("recordList") || "[]"
-  );
-  record: Record = {
+  tags = tagList;
+  recordList: RecordItem[] = recordList;
+  record: RecordItem = {
     tags: [],
     notes: "",
-    type: "-", //'-'表示支出，’+‘表示收入
+    type: "-",
     amount: 0,
   };
 
@@ -55,16 +49,15 @@ export default class Money extends Vue {
   //保存数据
   saveRecord() {
     //深拷贝
-    const record2: Record = JSON.parse(JSON.stringify(this.record));
+    const record2: RecordItem = recordListModel.clone(this.record);
     record2.createdAt = new Date();
     this.recordList.push(record2);
-    console.log(this.recordList);
   }
 
+  //更新数据
   @Watch("recordList")
   onRecordListChaned() {
-    //JSON.stringify()序列化，转化成数组
-    window.localStorage.setItem("recordList", JSON.stringify(this.recordList));
+    recordListModel.save(this.recordList);
   }
 }
 </script>
