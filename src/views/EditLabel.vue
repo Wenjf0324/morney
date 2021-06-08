@@ -25,15 +25,14 @@ import Button from "../components/Button.vue";
 })
 export default class EditLabel extends Vue {
   created() {
-    //获取标签的id
-    const id = this.$route.params.id;
+    const id = this.$route.params.id; //获取标签的id
     tagListModel.fetch();
     const tags = tagListModel.data;
-    const tag = tags.filter((t) => t.id === id)[0]; //filter返回一个数组
+    const tag = tags.filter((t) => t.id === id)[0];
     if (tag) {
       console.log(tag);
     } else {
-      this.$router.replace("/404"); //replace 页面可以回退
+      this.$router.replace("/404");
     }
   }
 }
