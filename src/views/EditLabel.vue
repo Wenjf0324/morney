@@ -21,25 +21,21 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import tagListModel from "@/models/tagListModel";
 import FormItem from "../components/Money/FormItem.vue";
 import Button from "../components/Button.vue";
+import { Tag } from "@/custom";
+import store from "@/store/index2";
 
 @Component({
   components: { FormItem, Button },
 })
 export default class EditLabel extends Vue {
-  tag?: { id: string; name: string } = undefined;
+  tag?: Tag = undefined;
+
   created() {
-    const id = this.$route.params.id; //获取标签的id
     //获取 tag
-    tagListModel.fetch();
-    const tags = tagListModel.data;
-    const tag = tags.filter((t) => t.id === id)[0];
-    if (tag) {
-      //tag存在
-      this.tag = tag;
-    } else {
+    this.tag = store.findTag(this.$route.params.id); //获取标签的id
+    if (!this.tag) {
       //tag不存在
       this.$router.replace("/404");
     }
@@ -47,13 +43,13 @@ export default class EditLabel extends Vue {
 
   update(name: string) {
     if (this.tag) {
-      tagListModel.update(this.tag.id, name);
+      store.updateTag(this.tag.id, name);
     }
   }
 
   remove() {
     if (this.tag) {
-      if (tagListModel.remove(this.tag.id)) {
+      if (store.removeTag(this.tag.id)) {
         this.$router.back();
       } else {
         window.alert("删除失败");
