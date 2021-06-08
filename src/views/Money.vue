@@ -25,9 +25,14 @@ import store from "@/store/index2";
 
 @Component({
   components: { NumberPad, Types, FormItem, Tags },
+  computed: {
+    recordList() {
+      //实时监听数据的变化
+      return store.recordList; //地址的赋值
+    },
+  },
 })
 export default class Money extends Vue {
-  recordList = store.recordList;
   record: RecordItem = {
     tags: [],
     notes: "",

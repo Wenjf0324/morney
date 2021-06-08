@@ -25,14 +25,17 @@ import Button from "../components/Button.vue";
 
 @Component({
   components: { Button },
+  computed: {
+    tags() {
+      return store.tagList;
+    },
+  },
 })
 export default class Labels extends Vue {
-  tags = store.tagList; //知识点1 读
-
   createTag() {
     const name = window.prompt("请输入标签名");
     if (name) {
-      store.createTag(name); //写
+      store.createTag(name);
     }
   }
 }
