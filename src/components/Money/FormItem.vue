@@ -21,7 +21,7 @@ export default class FormItem extends Vue {
   @Prop({ default: "" }) readonly value!: string;
 
   @Prop({ required: true }) fieldName!: string; //required:true 表示必须传值，'!' 表示没有初始值
-  @Prop() placeholder?: string; //'?' 表示有可能不存在
+  @Prop() placeholder?: string; //'?' 表示有可能为空
 
   //深度监听 value 的变化
   @Watch("value")

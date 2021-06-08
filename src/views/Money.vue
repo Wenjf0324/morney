@@ -8,7 +8,6 @@
         @update:value="onUpdateNotes"
       />
     </div>
-
     <types :value.sync="record.type" />
     <number-pad @update:value="onUpdateAmount" @submit="saveRecord" />
   </Layout>
