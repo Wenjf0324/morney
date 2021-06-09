@@ -23,17 +23,18 @@ import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import FormItem from "../components/Money/FormItem.vue";
 import Button from "../components/Button.vue";
-import { Tag } from "@/custom";
 
 @Component({
   components: { FormItem, Button },
 })
 export default class EditLabel extends Vue {
-  tag?: Tag = undefined;
-
+  //getter
+  get tag() {
+    return this.$store.state.currentTag;
+  }
   created() {
-    //获取 tag
-    // this.tag = store.findTag(this.$route.params.id); //获取标签的id
+    const id = this.$route.params.id; //获取标签的id
+    this.$store.commit("setCurrentTag", id); //获取 tag
     if (!this.tag) {
       //tag不存在
       this.$router.replace("/404");
