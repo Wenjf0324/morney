@@ -24,12 +24,6 @@ import { RecordItem } from "@/custom";
 
 @Component({
   components: { NumberPad, Types, FormItem, Tags },
-  computed: {
-    recordList() {
-      //实时监听数据的变化
-      return this.$store.state.recordList; //地址的赋值
-    },
-  },
 })
 export default class Money extends Vue {
   record: RecordItem = {
@@ -38,6 +32,11 @@ export default class Money extends Vue {
     type: "-",
     amount: 0,
   };
+
+  get recordList() {
+    //实时监听数据的变化
+    return this.$store.state.recordList; //地址的赋值
+  }
 
   created() {
     this.$store.commit("fetchRecords");
