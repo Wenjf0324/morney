@@ -21,14 +21,13 @@ import FormItem from "@/components/Money/FormItem.vue";
 import Tags from "@/components/Money/Tags.vue";
 import { Component } from "vue-property-decorator";
 import { RecordItem } from "@/custom";
-import store from "@/store/index2";
 
 @Component({
   components: { NumberPad, Types, FormItem, Tags },
   computed: {
     recordList() {
       //实时监听数据的变化
-      return store.recordList; //地址的赋值
+      return this.$store.state.recordList; //地址的赋值
     },
   },
 })
@@ -40,6 +39,10 @@ export default class Money extends Vue {
     amount: 0,
   };
 
+  created() {
+    this.$store.commit("fetchRecords");
+  }
+
   onUpdateNotes(value: string) {
     this.record.notes = value;
   }
@@ -50,7 +53,7 @@ export default class Money extends Vue {
 
   //保存数据
   saveRecord() {
-    store.createRecord(this.record);
+    this.$store.commit("createRecord", this.record);
   }
 }
 </script>
