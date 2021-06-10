@@ -23,7 +23,7 @@ const recordStore = {
   createRecord(record: RecordItem) {
     //深拷贝
     const record2: RecordItem = clone(record);
-    record2.createdAt = new Date();
+    record2.createdAt = new Date().toISOString();
     this.recordList && this.recordList.push(record2); //可选链语法 ES 2020
     //this.recordList?.push(record2);
     recordStore.saveRecords();

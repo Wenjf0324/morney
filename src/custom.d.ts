@@ -1,9 +1,15 @@
+export type RootState = {
+  recordList: RecordItem[];
+  tagList: Tag[];
+  currentTag?: Tag;
+};
+
 export type RecordItem = {
-  tags: string[];
+  tags: Tag[];
   notes: string;
   type: string;
   amount: number; //数据类型 object | string
-  createdAt?: Date; // 类 / 构造函数  '?'表示可以为空
+  createdAt?: string; // 类 / 构造函数  '?'表示可以为空
 };
 
 export type Tag = {
