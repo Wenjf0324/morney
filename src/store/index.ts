@@ -70,6 +70,7 @@ const store = new Vuex.Store({
       window.localStorage.setItem("tagList", JSON.stringify(state.tagList));
     },
 
+    //获取当前 tag
     setCurrentTag(state, id: string) {
       state.currentTag = state.tagList.filter((t) => t.id === id)[0];
     },
