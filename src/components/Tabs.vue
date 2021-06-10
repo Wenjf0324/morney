@@ -1,6 +1,7 @@
 <template>
   <div>
     <ul class="tabs">
+      <!-- :class="value === '-' && 'selected'" -->
       <li
         v-for="item in dataSource"
         :key="item.value"
@@ -25,10 +26,10 @@ export default class Tags extends Vue {
   dataSource!: DataSourceItem[];
 
   @Prop(String)
-  readonly value!: string;
+  readonly value!: string; //'!' 不可能是undefined
 
   @Prop(String)
-  classPrefix?: string;
+  classPrefix?: string; // '?' 可能是 undefined , 精确控制类
 
   liClass(item: DataSourceItem) {
     return {
