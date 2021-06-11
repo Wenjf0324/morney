@@ -7,9 +7,11 @@
       :dataSource="intervalList"
       :value.sync="interval"
     /> -->
-    <ol>
+    <ol v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
-        <h3 class="title">{{ beautify(group.title) }}</h3>
+        <h3 class="title">
+          {{ beautify(group.title) }} <span>￥{{ group.total }}</span>
+        </h3>
         <ol>
           <li v-for="item in group.items" :key="item.id" class="record">
             <span>{{ tagString(item.tags) }}</span>
@@ -21,6 +23,9 @@
         </ol>
       </li>
     </ol>
+    <div v-else class="noResult">
+      目前没有相关记录
+    </div>
   </Layout>
 </template>
 
@@ -51,15 +56,18 @@ export default class Statistics extends Vue {
   }
 
   get groupedList() {
+    type Result = { title: string; total?: number; items: RecordItem[] }[];
     const { recordList } = this;
-    if (recordList.length === 0) {
+    //排序，sort()会改变原来的数组，返回一个新的数组
+    const newList = clone(recordList)
+      .filter((r) => r.type === this.type)
+      .sort(
+        (a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
+      );
+    if (newList.length === 0) {
       return [];
     }
-    //排序，sort()会改变原来的数组，返回一个新的数组
-    const newList = clone(recordList).sort(
-      (a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
-    );
-    const result = [
+    const result: Result = [
       {
         title: dayjs(newList[0].createdAt).format("YYYY-MM-DD"),
         items: [newList[0]],
@@ -77,8 +85,12 @@ export default class Statistics extends Vue {
         });
       }
     }
+    result.map((group) => {
+      group.total = group.items.reduce((sum, item) => sum + item.amount, 0);
+    });
     return result;
   }
+
   beforeCreate() {
     this.$store.commit("fetchRecords");
   }
@@ -100,7 +112,7 @@ export default class Statistics extends Vue {
   }
 
   tagString(tags: Tag[]) {
-    return tags.length === 0 ? "无" : tags.join(",");
+    return tags.length === 0 ? "无" : tags.map((t) => t.name).join("，");
   }
 }
 </script>
@@ -139,5 +151,9 @@ export default class Statistics extends Vue {
   margin-right: auto;
   margin-left: 8px;
   color: #999;
+}
+.noResult {
+  padding: 16px;
+  text-align: center;
 }
 </style>

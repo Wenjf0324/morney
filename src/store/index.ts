@@ -11,6 +11,7 @@ const store = new Vuex.Store({
   //data
   state: {
     recordList: [],
+    createRecordError: null,
     tagList: [],
     currentTag: undefined,
   } as RootState,
@@ -23,9 +24,9 @@ const store = new Vuex.Store({
       ) as RecordItem[];
     },
 
-    createRecord(state, record) {
+    createRecord(state, record: RecordItem) {
       //深拷贝
-      const record2: RecordItem = clone(record);
+      const record2 = clone(record);
       record2.createdAt = new Date().toISOString();
       state.recordList.push(record2); //可选链语法 ES 2020
       //this.recordList?.push(record2);
@@ -45,6 +46,12 @@ const store = new Vuex.Store({
       state.tagList = JSON.parse(
         window.localStorage.getItem("tagList") || "[]"
       );
+      if (!state.tagList || state.tagList.length === 0) {
+        store.commit("createTag", "衣");
+        store.commit("createTag", "食");
+        store.commit("createTag", "住");
+        store.commit("createTag", "行");
+      }
     },
 
     createTag(state, name: string) {
@@ -53,7 +60,7 @@ const store = new Vuex.Store({
       if (names.indexOf(name) >= 0) {
         window.alert("标签名重复");
       }
-      const id = createId().toString();
+      const id = createId().toString(); //创建 id
       state.tagList.push({ id, name: name });
       store.commit("saveTags");
       window.alert("添加成功");

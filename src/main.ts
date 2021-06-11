@@ -19,3 +19,10 @@ new Vue({
   store,
   render: (h) => h(App),
 }).$mount("#app");
+
+//让屏幕尽快滚到最底部
+window.onload = function() {
+  setTimeout(function() {
+    window.scrollTo(0, 10000);
+  }, 0);
+};
