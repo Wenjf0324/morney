@@ -17,6 +17,7 @@ export type RecordItem = {
 export type Tag = {
   id: string;
   name: string;
+  icon: string;
 };
 
 export type TagListModel = {

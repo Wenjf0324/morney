@@ -78,23 +78,23 @@ export default class NumberPad extends Vue {
   .output {
     @extend %clearFix;
     @extend %innerShadow;
-    font-size: 36px;
+    font-size: 24px;
     font-family: Consolas, monospace;
     background: #fff;
-    padding: 9px 16px;
+    padding: 6px 16px;
     text-align: right;
-    height: 72px;
   }
   .buttons {
     @extend %clearFix; //继承%clearFix,复制的是选择器 .buttons
     > button {
+      $h: 56px;
       width: 25%;
-      height: 64px;
+      height: $h;
       float: left;
       background: transparent;
       border: none;
       &.ok {
-        height: 64 * 2px;
+        height: $h * 2;
         float: right;
       }
       &.zero {
@@ -128,6 +128,7 @@ export default class NumberPad extends Vue {
       }
       &:nth-child(12) {
         background: darken($bg, 4 * 6%);
+        // background: $color-main;
       }
     }
   }

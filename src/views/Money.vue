@@ -1,15 +1,19 @@
 <template>
-  <Layout class-prefix="layout">
+  <Layout class-prefix="layout" hide-nav="true">
+    <div class="types">
+      <Icon class="leftIcon" name="left" @click="$router.back()" />
+      <Tabs :data-source="recordTypeList" :value.sync="record.type" />
+    </div>
+
     <Tags @update:value="record.tags = $event" />
     <div class="notes">
       <FormItem
         field-name="备注"
-        placeholder="在这里输入备注"
+        placeholder="点我写备注..."
         :value.sync="record.notes"
       />
       <!-- :value="record.notes" @update:value="onUpdateNotes" -->
     </div>
-    <Tabs :data-source="recordTypeList" :value.sync="record.type" />
     <NumberPad @update:value="onUpdateAmount" @submit="saveRecord" />
   </Layout>
 </template>
@@ -69,11 +73,34 @@ export default class Money extends Vue {
 </script>
 
 <style lang="scss" scoped>
-::v-deep .layout-content {
-  display: flex;
-  flex-direction: column;
+@import "~@/assets/style/helper.scss";
+::v-deep {
+  .layout-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .tabs {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
-.notes {
-  padding: 12px 0;
+.types {
+  height: 64px;
+  background: $color-main;
+  position: relative;
+  .leftIcon {
+    width: 24px;
+    height: 24px;
+    color: #fff;
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
+// .notes {
+//   padding: 12px 0;
+// }
 </style>

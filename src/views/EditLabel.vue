@@ -75,8 +75,6 @@ export default class EditLabel extends Vue {
     top: 50%;
     transform: translateY(-50%);
   }
-  > .title {
-  }
 }
 .form-wrapper {
   background: white;

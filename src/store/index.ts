@@ -4,6 +4,7 @@ import clone from "@/lib/clone";
 import { RecordItem, RootState } from "@/custom";
 import createId from "@/lib/createId";
 import router from "@/router/index";
+import tagInitList from "../constants/tagInitList";
 
 Vue.use(Vuex);
 
@@ -47,24 +48,30 @@ const store = new Vuex.Store({
       state.tagList = JSON.parse(
         window.localStorage.getItem("tagList") || "[]"
       );
-      if (!state.tagList || state.tagList.length === 0) {
-        store.commit("createTag", "衣");
-        store.commit("createTag", "食");
-        store.commit("createTag", "住");
-        store.commit("createTag", "行");
+      // if (!state.tagList || state.tagList.length === 0) {
+      for (let i = 0; i < tagInitList.length; i++) {
+        store.commit("createTag", {
+          name: tagInitList[i].name,
+          icon: tagInitList[i].icon,
+        });
       }
+      // }
     },
 
-    createTag(state, name: string) {
-      //this.tagList = [{id:'1', name:'1'}, {id:'2', name:'2'}]
+    createTag(state, payload: { name: string; icon: string }) {
+      //this.tagList = [{id:'1', name:'1', icon:''}, {id:'2', name:'2', icon:''}]
       state.createTagError = null;
+
+      const { name, icon } = payload;
+      //遍历 tagList，判断是否有重复
       const names = state.tagList.map((item) => item.name);
       if (names.indexOf(name) >= 0) {
         state.createTagError = new Error("tag name duplicated");
         return;
       }
+
       const id = createId().toString(); //创建 id
-      state.tagList.push({ id, name: name });
+      state.tagList.push({ id, name: name, icon: icon });
       store.commit("saveTags");
     },
 

@@ -46,27 +46,32 @@ export default class Tags extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/style/helper.scss";
 .tabs {
-  background: #c4c4c4;
+  width: 200px;
+  font-size: 16px;
+  color: #fff;
+  background: $color-main;
+  border: 1px solid #fff;
+  border-radius: 6px;
   display: flex;
-  text-align: center;
-  font-size: 24px;
   &-item {
     width: 50%;
-    height: 64px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    &.selected::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: #333;
+    text-align: center;
+    padding: 4px 0;
+    &.selected {
+      background: #fff;
+      color: $color-main;
     }
+    // &.selected::after {
+    //   content: "";
+    //   position: absolute;
+    //   bottom: 0;
+    //   left: 0;
+    //   width: 100%;
+    //   height: 4px;
+    //   background: #333;
+    // }
   }
 }
 </style>
