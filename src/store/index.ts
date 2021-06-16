@@ -4,7 +4,7 @@ import clone from "@/lib/clone";
 import { RecordItem, RootState } from "@/custom";
 import createId from "@/lib/createId";
 import router from "@/router/index";
-import tagInitList from "../constants/tagInitList";
+import payTagsInit from "../constants/payTagsInit";
 
 Vue.use(Vuex);
 
@@ -49,10 +49,10 @@ const store = new Vuex.Store({
         window.localStorage.getItem("tagList") || "[]"
       );
       // if (!state.tagList || state.tagList.length === 0) {
-      for (let i = 0; i < tagInitList.length; i++) {
+      for (let i = 0; i < payTagsInit.length; i++) {
         store.commit("createTag", {
-          name: tagInitList[i].name,
-          icon: tagInitList[i].icon,
+          name: payTagsInit[i].name,
+          icon: payTagsInit[i].icon,
         });
       }
       // }

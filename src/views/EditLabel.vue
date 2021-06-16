@@ -1,7 +1,7 @@
 <template>
   <Layout>
     <div class="navBar">
-      <Icon class="leftIcon" name="left" @click="goBack" />
+      <Icon class="leftIcon" name="left" @click="$router.back()" />
       <span class="title">编辑标签</span>
     </div>
     <div class="form-wrapper">
