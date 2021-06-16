@@ -11,10 +11,15 @@
         <div class="tag-name">{{ tag.name }}</div>
       </li>
 
-      <li id="last" class="new" @click="createTag">
+      <li id="last" class="new" @click="$router.replace('/labels')">
+        <div class="tag-icon"><Icon name="new" /></div>
+        <div class="tag-name">设置</div>
+      </li>
+
+      <!-- <li id="last" class="new" @click="createTag">
         <div class="tag-icon"><Icon name="new" /></div>
         <div class="tag-name">新增</div>
-      </li>
+      </li> -->
     </ul>
   </div>
 </template>

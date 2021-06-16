@@ -1,7 +1,7 @@
 <template>
   <Layout class-prefix="layout" hide-nav="true">
     <div class="types">
-      <Icon class="leftIcon" name="left" @click="$router.back()" />
+      <Icon class="leftIcon" name="left" @click="$router.replace('/account')" />
       <Tabs :data-source="recordTypeList" :value.sync="record.type" />
     </div>
 

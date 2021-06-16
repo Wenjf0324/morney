@@ -1,7 +1,25 @@
 <template>
   <Layout>
-    <!-- <Types class-prefix="zzz" :value.sync="type" /> -->
-    <Tabs class-prefix="type" :dataSource="recordTypeList" :value.sync="type" />
+    <header>
+      <h3>记账本</h3>
+      <div class="summary">
+        <div class="date">
+          <div class="year">2021年</div>
+          <div><span class="month">06</span>月</div>
+        </div>
+        <dl class="details">
+          <div class="item">
+            <dt>收入</dt>
+            <dd>100.<span style="font-size:12px;">00</span></dd>
+          </div>
+          <div class="item">
+            <dt>支出</dt>
+            <dd>41.<span style="font-size:12px;">00</span></dd>
+          </div>
+        </dl>
+      </div>
+    </header>
+    <!-- <Tabs class-prefix="type" :dataSource="recordTypeList" :value.sync="type" /> -->
     <!-- <Tabs
       class-prefix="interval"
       :dataSource="intervalList"
@@ -26,9 +44,95 @@
     <div v-else class="noResult">
       目前没有相关记录
     </div>
-    
   </Layout>
 </template>
+
+<style lang="scss" scoped>
+@import "~@/assets/style/helper.scss";
+$c: #fff;
+$f: 12px;
+$pb: 8px;
+header {
+  background: $color-main;
+  padding: 6px 12px 12px;
+  color: $c;
+  h3 {
+    text-align: center;
+  }
+  > .summary {
+    margin-top: 12px;
+    display: flex;
+    > .date {
+      padding-right: 16px;
+      position: relative;
+      &::after {
+        content: "";
+        display: block;
+        width: 1px;
+        height: 55%;
+        background: $c;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
+      > .year {
+        font-size: $f;
+        padding-bottom: $pb;
+      }
+    }
+    > .details {
+      flex: 1;
+      margin-left: 24px;
+      display: flex;
+      > .item {
+        flex: 1;
+        dt {
+          font-size: $f;
+          padding-bottom: $pb;
+        }
+      }
+    }
+  }
+}
+// deep 深度作用选择器
+::v-deep {
+  .type-tabs-item {
+    background: #c4c4c4;
+    &.selected {
+      background: #fff;
+      &::after {
+        display: none;
+      }
+    }
+    .interval-tabs-item {
+      height: 48px;
+    }
+  }
+}
+%item {
+  padding: 8px 16px;
+  line-height: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.title {
+  @extend %item;
+}
+.record {
+  @extend %item;
+  background: #fff;
+}
+.notes {
+  margin-right: auto;
+  margin-left: 8px;
+  color: #999;
+}
+.noResult {
+  padding: 16px;
+  text-align: center;
+}
+</style>
 
 <script lang="ts">
 import Vue from "vue";
@@ -117,44 +221,3 @@ export default class Statistics extends Vue {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-// deep 深度作用选择器
-::v-deep {
-  .type-tabs-item {
-    background: #c4c4c4;
-    &.selected {
-      background: #fff;
-      &::after {
-        display: none;
-      }
-    }
-    .interval-tabs-item {
-      height: 48px;
-    }
-  }
-}
-%item {
-  padding: 8px 16px;
-  line-height: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.title {
-  @extend %item;
-}
-.record {
-  @extend %item;
-  background: #fff;
-}
-.notes {
-  margin-right: auto;
-  margin-left: 8px;
-  color: #999;
-}
-.noResult {
-  padding: 16px;
-  text-align: center;
-}
-</style>

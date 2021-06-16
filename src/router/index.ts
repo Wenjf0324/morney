@@ -5,6 +5,7 @@ import Statistics from "@/views/Statistics.vue";
 import Account from "@/views/Account.vue";
 import NotFound from "@/views/NotFound.vue";
 import EditLabel from "@/views/EditLabel.vue";
+import Labels from "@/views/Labels.vue";
 
 Vue.use(VueRouter);
 
@@ -12,7 +13,7 @@ const routes = [
   {
     //重定向默认路径
     path: "/",
-    redirect: "/money",
+    redirect: "/account",
   },
   {
     path: "/money",
@@ -25,6 +26,10 @@ const routes = [
   {
     path: "/statistics",
     component: Statistics,
+  },
+  {
+    path: "/labels",
+    component: Labels,
   },
   {
     path: "/labels/edit/:id",
