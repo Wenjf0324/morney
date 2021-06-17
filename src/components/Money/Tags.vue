@@ -97,7 +97,6 @@ export default class Tags extends mixins(TagHelper) {
       font-size: 13px;
       text-align: center;
       margin-top: 16px;
-
       &:not(:nth-child(4n)) {
         margin-right: calc(4% / 3);
       }

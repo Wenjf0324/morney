@@ -165,7 +165,7 @@ export default class Statistics extends Vue {
     const { recordList } = this;
     //排序，sort()会改变原来的数组，返回一个新的数组
     const newList = clone(recordList)
-      .filter((r) => r.type === this.type)
+      // .filter((r) => r.type === this.type)
       .sort(
         (a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf()
       );

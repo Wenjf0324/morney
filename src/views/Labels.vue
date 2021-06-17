@@ -1,8 +1,8 @@
 <template>
-  <Layout class-prefix="layout" hide-nav="true">
+  <div class="labels">
     <div class="navBar">
       <Icon class="leftIcon" name="left" @click="$router.replace('/money')" />
-      <span class="title">编辑支出分类</span>
+      <span class="title">支出分类</span>
     </div>
     <div class="tags">
       <router-link
@@ -22,10 +22,10 @@
         <Icon name="right" />
       </router-link>
     </div>
-    <div class="createTag" @click="createTag">
-      新建分类
+    <div class="createTag" @click="$router.replace('/labels/add')">
+      + 添加分类
     </div>
-  </Layout>
+  </div>
 </template>
 
 <script lang="ts">
@@ -49,12 +49,12 @@ export default class Labels extends mixins(TagHelper) {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
-::v-deep {
-  .layout-content {
-    display: flex;
-    flex-direction: column;
-  }
+.labels {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
+
 .navBar {
   text-align: center;
   font-size: 16px;
@@ -74,7 +74,7 @@ export default class Labels extends mixins(TagHelper) {
 .tags {
   background: white;
   font-size: 16px;
-  padding: 0 16px 6px;
+  padding: 0 0 6px 16px;
   flex: 1;
   overflow: auto;
   z-index: 0;
@@ -119,12 +119,13 @@ export default class Labels extends mixins(TagHelper) {
       width: 18px;
       height: 18px;
       color: #666;
+      margin-right: 16px;
     }
   }
 }
 .createTag {
   @extend %outerShadow;
-  background: #fff;
+  background: #f0f0f0;
   width: 100%;
   height: 40px;
   line-height: 40px;

@@ -5,6 +5,7 @@ import Statistics from "@/views/Statistics.vue";
 import Account from "@/views/Account.vue";
 import NotFound from "@/views/NotFound.vue";
 import EditLabel from "@/views/EditLabel.vue";
+import AddLabel from "@/views/AddLabel.vue";
 import Labels from "@/views/Labels.vue";
 
 Vue.use(VueRouter);
@@ -34,6 +35,10 @@ const routes = [
   {
     path: "/labels/edit/:id",
     component: EditLabel,
+  },
+  {
+    path: "/labels/add",
+    component: AddLabel,
   },
   //其他路径为404页面
   {
