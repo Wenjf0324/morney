@@ -66,7 +66,7 @@ export default class AddLabel extends Vue {
     if (this.$store.state.createTagError) {
       window.alert("标签名重复了" || "未知错误");
     } else {
-      window.alert("添加成功");
+      this.$router.replace("/labels");
     }
   }
 
