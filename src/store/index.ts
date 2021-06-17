@@ -112,7 +112,7 @@ const store = new Vuex.Store({
       if (index >= 0) {
         state.tagList.splice(index, 1);
         store.commit("saveTags");
-        router.back(); //页面回退
+        // router.back(); //页面回退
       } else {
         window.alert("删除失败");
       }

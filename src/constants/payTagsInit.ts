@@ -13,5 +13,6 @@ const payTagsInit: Tag[] = [
   { id: "", name: "运动", icon: "yundong" },
   { id: "", name: "娱乐", icon: "yule" },
   { id: "", name: "化妆护肤", icon: "huazhuang" },
+  { id: "", name: "其他支出", icon: "zhichu" },
 ];
 export default payTagsInit;

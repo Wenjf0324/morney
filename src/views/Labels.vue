@@ -5,12 +5,8 @@
       <span class="title">支出分类</span>
     </div>
     <div class="tags">
-      <router-link
-        class="tag"
-        :to="`/labels/edit/${tag.id}`"
-        v-for="tag in tags"
-        :key="tag.id"
-      >
+      <div class="tag" v-for="tag in tags" :key="tag.id">
+        <!-- :to="`/labels/edit/${tag.id}`" -->
         <div class="label">
           <div class="icon-wrapper">
             <Icon :name="tag.icon" />
@@ -19,8 +15,8 @@
           <span>{{ tag.name }}</span>
         </div>
 
-        <Icon name="right" />
-      </router-link>
+        <Icon name="delete" @click="remove(tag.id)" />
+      </div>
     </div>
     <div class="createTag" @click="$router.replace('/labels/add')">
       + 添加分类
@@ -38,11 +34,17 @@ import { TagHelper } from "../mixins/TagHelper";
   components: { Button },
 })
 export default class Labels extends mixins(TagHelper) {
+  get currentTag() {
+    return this.$store.state.currentTag;
+  }
   get tags() {
     return this.$store.state.tagList;
   }
   beforeCreate() {
     this.$store.commit("fetchTags");
+  }
+  remove(id: string) {
+    this.$store.commit("removeTag", id);
   }
 }
 </script>
@@ -118,7 +120,7 @@ export default class Labels extends mixins(TagHelper) {
     svg {
       width: 18px;
       height: 18px;
-      color: #666;
+      color: rgba(255, 0, 0, 0.6);
       margin-right: 16px;
     }
   }
