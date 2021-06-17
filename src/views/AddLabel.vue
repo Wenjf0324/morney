@@ -10,7 +10,12 @@
       <div class="icon-wrapper">
         <Icon :name="selectedIcon" />
       </div>
-      <input v-model="value" type="text" placeholder="请输入分类名称" />
+      <input
+        v-model="value"
+        type="text"
+        placeholder="请输入分类名称(4个字以内)"
+        maxlength="4"
+      />
     </label>
 
     <div class="labels">
@@ -46,7 +51,7 @@ import LabelItem from "@/components/LabelItem.vue";
 })
 export default class AddLabel extends Vue {
   value = "";
-  selectedIcon = "mifan";
+  selectedIcon = "canyin";
   labelList = labelList;
   selectedIcons: string[] = [labelList[0].labels[0]];
 
@@ -126,7 +131,7 @@ export default class AddLabel extends Vue {
   }
 }
 .labels {
-  padding: 16px;
+  padding: 16px 16px 0;
   flex-grow: 1;
   overflow: auto;
   &::-webkit-scrollbar {
@@ -136,13 +141,14 @@ export default class AddLabel extends Vue {
     text-align: center;
   }
   ol {
-    padding-top: 16px;
+    padding-top: 14px;
+    padding-bottom: 6px;
     display: flex;
     flex-wrap: wrap;
     li {
       width: 19%;
       text-align: center;
-      margin-bottom: 32px;
+      margin-bottom: 24px;
       &:not(:nth-child(5n)) {
         margin-right: calc(5% / 4);
       }
