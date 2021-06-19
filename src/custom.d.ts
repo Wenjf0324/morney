@@ -7,7 +7,7 @@ export type RootState = {
 };
 
 export type RecordItem = {
-  tags: Tag[];
+  tag: Tag;
   notes: string;
   type: string;
   amount: number; //数据类型 object | string

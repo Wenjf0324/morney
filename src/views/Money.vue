@@ -5,7 +5,7 @@
       <Tabs :data-source="recordTypeList" :value.sync="record.type" />
     </div>
 
-    <Tags :type="record.type" @update:value="record.tags = $event" />
+    <Tags :type="record.type" @update:value="record.tag = $event" />
 
     <div class="notes">
       <FormItem
@@ -35,7 +35,7 @@ import recordTypeList from "@/constants/recordTypeList";
 })
 export default class Money extends Vue {
   record: RecordItem = {
-    tags: [],
+    tag: { id: "", name: "", icon: "" },
     notes: "",
     type: "-",
     amount: 0,
@@ -62,7 +62,7 @@ export default class Money extends Vue {
 
   //保存数据
   saveRecord() {
-    if (!this.record.tags || this.record.tags.length === 0) {
+    if (!this.record.tag) {
       return window.alert("请选择一个标签");
     }
     this.$store.commit("createRecord", this.record);

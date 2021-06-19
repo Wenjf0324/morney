@@ -70,7 +70,7 @@ export default class Tags extends mixins(TagHelper) {
       //选中
       this.selectedTags.push(tag);
     }
-    this.$emit("update:value", this.selectedTags); //通知外部
+    this.$emit("update:value", this.selectedTags[0]); //通知外部
   }
 }
 </script>

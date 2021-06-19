@@ -49,7 +49,7 @@ nav {
         display: block;
         width: 40px;
         height: 40px;
-        background: #fff;
+        background: #ffe6ec;
         position: absolute;
         top: 6px;
         border-radius: 50%;
