@@ -1,8 +1,9 @@
 <template>
-  <div class="labels">
+  <Layout>
     <div class="navBar">
-      <Icon class="leftIcon" name="left" @click="$router.replace('/money')" />
-      <span class="title">支出分类</span>
+      <!-- <Icon class="leftIcon" name="left" @click="$router.replace('/money')" /> -->
+      <span class="title">支出类别</span>
+      <span class="add" @click="$router.replace('/labels/add')">+ 添加</span>
     </div>
     <div class="tags">
       <div class="tag" v-for="tag in tags" :key="tag.id">
@@ -18,22 +19,18 @@
         <Icon name="delete" @click="remove(tag.id)" />
       </div>
     </div>
-    <div class="createTag" @click="$router.replace('/labels/add')">
-      + 添加分类
-    </div>
-  </div>
+  </Layout>
 </template>
 
 <script lang="ts">
-import { mixins } from "vue-class-component";
+import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import Button from "../components/Button.vue";
-import { TagHelper } from "../mixins/TagHelper";
 
 @Component({
   components: { Button },
 })
-export default class Labels extends mixins(TagHelper) {
+export default class Labels extends Vue {
   get currentTag() {
     return this.$store.state.currentTag;
   }
@@ -51,12 +48,6 @@ export default class Labels extends mixins(TagHelper) {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
-.labels {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
 .navBar {
   text-align: center;
   font-size: 16px;
@@ -64,12 +55,11 @@ export default class Labels extends mixins(TagHelper) {
   background: $color-main;
   color: #fff;
   position: relative;
-  > .leftIcon {
-    width: 24px;
-    height: 24px;
+  > .add {
+    display: block;
     position: absolute;
-    left: 16px;
     top: 50%;
+    right: 16px;
     transform: translateY(-50%);
   }
 }
@@ -124,14 +114,5 @@ export default class Labels extends mixins(TagHelper) {
       margin-right: 16px;
     }
   }
-}
-.createTag {
-  @extend %outerShadow;
-  background: #f0f0f0;
-  width: 100%;
-  height: 40px;
-  line-height: 40px;
-  text-align: center;
-  z-index: 1;
 }
 </style>

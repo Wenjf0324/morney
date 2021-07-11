@@ -1,9 +1,10 @@
 export type RootState = {
+  tagList: Tag[];
   recordList: RecordItem[];
+  groupedList: [];
+  currentTag?: Tag;
   createRecordError: Error | null;
   createTagError: Error | null;
-  tagList: Tag[];
-  currentTag?: Tag;
 };
 
 export type RecordItem = {
@@ -19,6 +20,13 @@ export type Tag = {
   name: string;
   icon: string;
 };
+
+export type Result = {
+  title: string;
+  payTotal?: number;
+  incomeTotal?: number;
+  items: RecordItem[];
+}[];
 
 export type TagListModel = {
   data: Tag[];

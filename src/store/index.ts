@@ -11,11 +11,12 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   //data
   state: {
+    tagList: [],
     recordList: [],
+    groupedList: [],
+    currentTag: undefined,
     createRecordError: null,
     createTagError: null,
-    tagList: [],
-    currentTag: undefined,
   } as RootState,
 
   //methods

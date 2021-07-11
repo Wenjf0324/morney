@@ -59,6 +59,14 @@ export default class Tags extends Vue {
     width: 50%;
     text-align: center;
     padding: 4px 0;
+    &:first-child {
+      border-top-left-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+    &:last-child {
+      border-top-right-radius: 6px;
+      border-bottom-right-radius: 6px;
+    }
     &.selected {
       background: #fff;
       color: $color-main;

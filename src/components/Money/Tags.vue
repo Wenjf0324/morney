@@ -36,13 +36,12 @@
 </template>
 
 <script lang="ts">
+import Vue from "vue";
 import incomeTags from "@/constants/incomeTags";
-import { TagHelper } from "@/mixins/TagHelper";
-import { mixins } from "vue-class-component";
 import { Component, Prop } from "vue-property-decorator";
 
 @Component
-export default class Tags extends mixins(TagHelper) {
+export default class Tags extends Vue {
   selectedTags: string[] = [];
 
   @Prop(String) type!: string;

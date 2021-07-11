@@ -3,11 +3,17 @@
     <header>
       <h3>记账本</h3>
       <div class="summary">
-        <div class="date">
-          <div class="year">2021年</div>
-          <div><span class="month">06</span>月</div>
+        <!-- 时间 -->
+        <div class="currentTime" @click="showTimePicker = true">
+          <span class="year">{{ currentYear }}年</span>
+          <div class="month">
+            {{ currentMonth }}<span style="font-size:12px;"> 月</span
+            ><Icon name="zhankai" />
+          </div>
         </div>
-        <dl class="details">
+
+        <!-- 总计 -->
+        <dl class="total">
           <div class="item">
             <dt>收入</dt>
             <dd>
@@ -27,12 +33,18 @@
         </dl>
       </div>
     </header>
-    <!-- <Tabs class-prefix="type" :dataSource="recordTypeList" :value.sync="type" /> -->
-    <!-- <Tabs
-      class-prefix="interval"
-      :dataSource="intervalList"
-      :value.sync="interval"
-    /> -->
+
+    <div class="wrapper" v-if="showTimePicker" @click="handleCancel"></div>
+    <van-popup v-model="showTimePicker" position="bottom">
+      <van-datetime-picker
+        v-model="currentDate"
+        type="year-month"
+        title="选择月份"
+        @cancel="handleCancel"
+        @confirm="handleConform"
+      />
+    </van-popup>
+
     <ol class="account" v-if="groupedList.length > 0">
       <li v-for="(group, index) in groupedList" :key="index">
         <div class="title">
@@ -83,9 +95,13 @@ import { Component } from "vue-property-decorator";
 import Tabs from "@/components/Tabs.vue";
 import intervalList from "@/constants/intervalList";
 import recordTypeList from "@/constants/recordTypeList";
-import { RecordItem, RootState, Tag } from "@/custom";
+import { Result, RootState, Tag } from "@/custom";
 import dayjs from "dayjs";
 import clone from "@/lib/clone";
+import { DatetimePicker, Popup } from "vant";
+
+Vue.use(DatetimePicker);
+Vue.use(Popup);
 
 const oneDay = 86400 * 1000; //一天有 86400*1000ms
 
@@ -98,18 +114,17 @@ export default class Statistics extends Vue {
   intervalList = intervalList;
   recordTypeList = recordTypeList;
 
+  showTimePicker = false;
+  currentDate = new Date();
+  currentYear = dayjs().format("YYYY");
+  currentMonth = dayjs().format("MM");
+
   //获取数据
   get recordList() {
     return (this.$store.state as RootState).recordList;
   }
 
   get groupedList() {
-    type Result = {
-      title: string;
-      payTotal?: number;
-      incomeTotal?: number;
-      items: RecordItem[];
-    }[];
     const { recordList } = this;
     //将数据按 新到旧的时间 排序，sort()会改变原来的数组，返回一个新的数组
     const newList = clone(recordList).sort(
@@ -144,7 +159,17 @@ export default class Statistics extends Vue {
         .filter((g) => g.type === "+")
         .reduce((sum, item) => sum + item.amount, 0);
     });
-    return result;
+
+    const currentTime = this.currentYear + "-" + this.currentMonth;
+    const finalList = [];
+    for (let i = 0; i < result.length; i++) {
+      const current = result[i];
+      if (current.title.indexOf(currentTime) === 0) {
+        finalList.push(current);
+      }
+    }
+    window.localStorage.setItem("groupedList", JSON.stringify(finalList));
+    return finalList;
   }
 
   get totalPay() {
@@ -183,6 +208,16 @@ export default class Statistics extends Vue {
     this.$store.commit("fetchRecords");
   }
 
+  //隐藏月份选择器
+  handleCancel() {
+    this.showTimePicker = false;
+  }
+  handleConform(val: any) {
+    this.showTimePicker = false;
+    let month = dayjs(val).format("MM");
+    this.currentMonth = month;
+  }
+
   beautify(string: string) {
     const day = dayjs(string);
     const now = dayjs();
@@ -199,10 +234,6 @@ export default class Statistics extends Vue {
     }
   }
 
-  tagString(tags: Tag[]) {
-    return tags.length === 0 ? "无" : tags.map((t) => t.name).join("，");
-  }
-
   moneyFormat(type: string, amount: number) {
     if (type === "-") {
       return "-" + amount.toFixed(2);
@@ -215,9 +246,42 @@ export default class Statistics extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
+// deep 深度作用选择器
+::v-deep {
+  .type-tabs-item {
+    background: #c4c4c4;
+    &.selected {
+      background: #fff;
+      &::after {
+        display: none;
+      }
+    }
+    .interval-tabs-item {
+      height: 48px;
+    }
+  }
+  .van-picker__toolbar {
+    border-bottom: 1px solid #e6e6e6;
+  }
+  .van-picker__title {
+    font-size: 14px;
+  }
+  .van-picker__confirm {
+    color: $color-main;
+  }
+}
 %summaryTitle {
   font-size: 12px;
   padding-bottom: 8px;
+}
+.wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 2000;
 }
 header {
   background: $color-main;
@@ -229,7 +293,7 @@ header {
   .summary {
     margin-top: 12px;
     display: flex;
-    .date {
+    .currentTime {
       padding-right: 16px;
       position: relative;
       &::after {
@@ -243,10 +307,15 @@ header {
         right: 0;
       }
       .year {
+        display: block;
         @extend %summaryTitle;
       }
+      .icon {
+        width: 24px;
+        height: 18px;
+      }
     }
-    .details {
+    .total {
       flex: 1;
       margin-left: 24px;
       display: flex;
@@ -256,21 +325,6 @@ header {
           @extend %summaryTitle;
         }
       }
-    }
-  }
-}
-// deep 深度作用选择器
-::v-deep {
-  .type-tabs-item {
-    background: #c4c4c4;
-    &.selected {
-      background: #fff;
-      &::after {
-        display: none;
-      }
-    }
-    .interval-tabs-item {
-      height: 48px;
     }
   }
 }
@@ -300,10 +354,11 @@ header {
         height: 40px;
         margin-right: 8px;
         display: inline-block;
-        background: #f5f5f5;
+        background: #fbfbf1;
         border-radius: 50%;
         position: relative;
         .icon {
+          color: $color-main;
           width: 25px;
           height: 25px;
           position: absolute;
@@ -319,7 +374,7 @@ header {
       }
     }
     .income {
-      color: red;
+      color: rgba(255, 0, 0, 0.8);
     }
     > .icon {
       width: 18px;

@@ -3,7 +3,7 @@
     <div class="navBar">
       <span @click="$router.replace('/labels')">取消</span>
       <span class="title">添加分类</span>
-      <span @click="createTag">保存</span>
+      <span @click="createTag">完成</span>
     </div>
 
     <label class="formItem">

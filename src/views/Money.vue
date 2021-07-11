@@ -62,13 +62,13 @@ export default class Money extends Vue {
 
   //保存数据
   saveRecord() {
-    if (!this.record.tag) {
+    if (!this.record.tag.name) {
       return window.alert("请选择一个标签");
     }
     this.$store.commit("createRecord", this.record);
     if (this.$store.state.createRecordError === null) {
-      window.alert("已保存");
       this.record.notes = "";
+      this.$router.replace("/account");
     }
   }
 }
