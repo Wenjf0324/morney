@@ -13,7 +13,7 @@
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
-      <button @click="ok" class="ok">ok</button>
+      <button @click="ok" class="ok">OK</button>
       <button @click="inputContent" class="zero">0</button>
       <button @click="inputContent" class="point">.</button>
     </div>
@@ -88,7 +88,7 @@ export default class NumberPad extends Vue {
     background: #f2f3f5;
     @extend %clearFix; //继承%clearFix,复制的是选择器 .buttons
     > button {
-      $h: 56px;
+      $h: 52px;
       width: 25%;
       height: $h;
       float: left;
@@ -97,6 +97,7 @@ export default class NumberPad extends Vue {
       border-right: 1px solid #d9d9d9;
       border-bottom: 1px solid #d9d9d9;
       &.ok {
+        color: #fff;
         height: $h * 2;
         float: right;
         background: $color-main;
