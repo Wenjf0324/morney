@@ -15,7 +15,7 @@
         <!-- 总计 -->
         <dl class="total">
           <div class="item">
-            <dt>收入</dt>
+            <dt>收入(元)</dt>
             <dd>
               {{ totalIncome[0] }}.<span style="font-size:12px;">{{
                 totalIncome[1]
@@ -23,7 +23,7 @@
             </dd>
           </div>
           <div class="item">
-            <dt>支出</dt>
+            <dt>支出(元)</dt>
             <dd>
               {{ totalPay[0] }}.<span style="font-size:12px;">{{
                 totalPay[1]
@@ -34,7 +34,6 @@
       </div>
     </header>
 
-    <div class="wrapper" v-if="showTimePicker" @click="handleCancel"></div>
     <van-popup v-model="showTimePicker" position="bottom">
       <van-datetime-picker
         v-model="currentDate"
@@ -60,14 +59,17 @@
             >
           </div>
         </div>
-        <ol>
-          <li v-for="item in group.items" :key="item.id" class="record">
+        <ol class="record">
+          <li v-for="item in group.items" :key="item.id" class="recordItem">
             <div class="left">
               <div class="icon-wrapper">
                 <Icon :name="item.tag.icon" />
               </div>
               <div>
-                <p>{{ item.tag.name }}</p>
+                <p>
+                  {{ item.tag.name }}
+                  <!-- <span class="notes">{{ item.notes }}</span> -->
+                </p>
                 <p class="notes">
                   {{ item.notes }}
                 </p>
@@ -78,7 +80,6 @@
               :class="{ income: item.type === '+' }"
               >{{ moneyFormat(item.type, item.amount) }}</span
             >
-            <Icon name="right" />
           </li>
         </ol>
       </li>
@@ -168,7 +169,7 @@ export default class Statistics extends Vue {
         finalList.push(current);
       }
     }
-    window.localStorage.setItem("groupedList", JSON.stringify(finalList));
+    // window.localStorage.setItem("groupedList", JSON.stringify(finalList));
     return finalList;
   }
 
@@ -274,14 +275,9 @@ export default class Statistics extends Vue {
   font-size: 12px;
   padding-bottom: 8px;
 }
-.wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100vw;
-  min-height: 100vh;
-  background: rgba(0, 0, 0, 0.3);
-  z-index: 2000;
+%summaryTitle {
+  font-size: 12px;
+  padding-bottom: 8px;
 }
 header {
   background: $color-main;
@@ -291,6 +287,7 @@ header {
     text-align: center;
   }
   .summary {
+    font-size: 20px;
     margin-top: 12px;
     display: flex;
     .currentTime {
@@ -329,12 +326,12 @@ header {
   }
 }
 %item {
-  line-height: 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 .account {
+  padding-bottom: 32px;
   .title {
     @extend %item;
     font-size: 12px;
@@ -342,45 +339,50 @@ header {
     color: #999;
   }
   .record {
-    @extend %item;
-    font-size: 14px;
-    padding: 12px 8px;
-    background: #fff;
-    .left {
-      display: flex;
-      align-items: center;
-      .icon-wrapper {
-        width: 40px;
-        height: 40px;
-        margin-right: 8px;
-        display: inline-block;
-        background: #fbfbf1;
-        border-radius: 50%;
-        position: relative;
-        .icon {
-          color: $color-main;
-          width: 25px;
-          height: 25px;
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-        }
+    margin: 0 12px;
+    border-radius: 8px;
+    .recordItem {
+      @extend %item;
+      font-size: 14px;
+      padding: 12px 16px;
+      background: #fff;
+      &:first-child {
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
       }
-      .notes {
-        color: #999;
-        font-size: 12px;
-        line-height: 1.2;
+      &:last-child {
+        border-bottom-left-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+      .left {
+        display: flex;
+        align-items: center;
+        .icon-wrapper {
+          width: 40px;
+          height: 40px;
+          margin-right: 8px;
+          display: inline-block;
+          background: #fbfbf1;
+          border-radius: 50%;
+          position: relative;
+          .icon {
+            color: $color-main;
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        }
+        .notes {
+          color: #999;
+          font-size: 12px;
+        }
       }
     }
     .income {
-      color: rgba(255, 0, 0, 0.8);
-    }
-    > .icon {
-      width: 18px;
-      height: 18px;
-      margin-left: 4px;
-      color: #999;
+      color: $color-highlight;
     }
   }
 }

@@ -7,14 +7,12 @@
 
     <Tags :type="record.type" @update:value="record.tag = $event" />
 
-    <div class="notes">
-      <FormItem
-        field-name="备注"
-        placeholder="点我写备注..."
-        :value.sync="record.notes"
-      />
-      <!-- :value="record.notes" @update:value="onUpdateNotes" -->
-    </div>
+    <FormItem
+      field-name="备注"
+      placeholder="点我写备注..."
+      :value.sync="record.notes"
+    />
+    <!-- :value="record.notes" @update:value="onUpdateNotes" -->
 
     <NumberPad @update:value="onUpdateAmount" @submit="saveRecord" />
   </Layout>
@@ -29,6 +27,7 @@ import Tabs from "@/components/Tabs.vue";
 import { Component } from "vue-property-decorator";
 import { RecordItem } from "@/custom";
 import recordTypeList from "@/constants/recordTypeList";
+import { Dialog } from "vant";
 
 @Component({
   components: { NumberPad, FormItem, Tags, Tabs },
@@ -63,7 +62,11 @@ export default class Money extends Vue {
   //保存数据
   saveRecord() {
     if (!this.record.tag.name) {
-      return window.alert("请选择一个标签");
+      Dialog.alert({
+        message: "请选择一个标签",
+      });
+      return;
+      // return window.alert("请选择一个标签");
     }
     this.$store.commit("createRecord", this.record);
     if (this.$store.state.createRecordError === null) {
@@ -102,7 +105,4 @@ export default class Money extends Vue {
     transform: translateY(-50%);
   }
 }
-// .notes {
-//   padding: 12px 0;
-// }
 </style>

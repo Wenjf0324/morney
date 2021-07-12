@@ -25,11 +25,9 @@
 <script lang="ts">
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
-import Button from "../components/Button.vue";
+import { Dialog } from "vant";
 
-@Component({
-  components: { Button },
-})
+@Component
 export default class Labels extends Vue {
   get currentTag() {
     return this.$store.state.currentTag;
@@ -41,7 +39,9 @@ export default class Labels extends Vue {
     this.$store.commit("fetchTags");
   }
   remove(id: string) {
-    this.$store.commit("removeTag", id);
+    Dialog.confirm({ message: "确定要删除该类别吗" }).then(() => {
+      this.$store.commit("removeTag", id);
+    });
   }
 }
 </script>
@@ -110,7 +110,7 @@ export default class Labels extends Vue {
     svg {
       width: 18px;
       height: 18px;
-      color: rgba(255, 0, 0, 0.6);
+      color: $color-highlight;
       margin-right: 16px;
     }
   }

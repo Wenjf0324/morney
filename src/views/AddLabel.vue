@@ -45,6 +45,7 @@ import Vue from "vue";
 import labelList from "@/constants/labelList";
 import { Component } from "vue-property-decorator";
 import LabelItem from "@/components/LabelItem.vue";
+import { Dialog } from "vant";
 
 @Component({
   components: { LabelItem },
@@ -57,7 +58,9 @@ export default class AddLabel extends Vue {
 
   createTag() {
     if (!this.value) {
-      return window.alert("标签名不能为空");
+      return Dialog.alert({
+        message: "标签名不能为空",
+      });
     }
     this.$store.commit("createTag", {
       name: this.value,
@@ -80,6 +83,7 @@ export default class AddLabel extends Vue {
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
+
 .addLabel {
   display: flex;
   flex-direction: column;

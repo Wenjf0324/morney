@@ -3,7 +3,6 @@ import Vuex from "vuex";
 import clone from "@/lib/clone";
 import { RecordItem, RootState } from "@/custom";
 import createId from "@/lib/createId";
-import router from "@/router/index";
 import payTagsInit from "../constants/payTagsInit";
 
 Vue.use(Vuex);

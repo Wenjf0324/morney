@@ -5,17 +5,17 @@
       <button @click="inputContent">1</button>
       <button @click="inputContent">2</button>
       <button @click="inputContent">3</button>
-      <button @click="remove">删除</button>
+      <button @click="remove" class="delete">删除</button>
       <button @click="inputContent">4</button>
       <button @click="inputContent">5</button>
       <button @click="inputContent">6</button>
-      <button @click="clear">清空</button>
+      <button @click="clear" class="empty">清空</button>
       <button @click="inputContent">7</button>
       <button @click="inputContent">8</button>
       <button @click="inputContent">9</button>
       <button @click="ok" class="ok">ok</button>
       <button @click="inputContent" class="zero">0</button>
-      <button @click="inputContent">.</button>
+      <button @click="inputContent" class="point">.</button>
     </div>
   </div>
 </template>
@@ -85,6 +85,7 @@ export default class NumberPad extends Vue {
     text-align: right;
   }
   .buttons {
+    background: #fbfbf1;
     @extend %clearFix; //继承%clearFix,复制的是选择器 .buttons
     > button {
       $h: 56px;
@@ -93,43 +94,57 @@ export default class NumberPad extends Vue {
       float: left;
       background: transparent;
       border: none;
+      border-right: 1px solid #d9d9d9;
+      border-bottom: 1px solid #d9d9d9;
       &.ok {
         height: $h * 2;
         float: right;
+        background: $color-main;
+        border-right: none;
+        border-bottom: none;
       }
       &.zero {
         width: 25 * 2%;
       }
-      $bg: #f2f2f2;
-      &:nth-child(1) {
-        background: $bg;
+      &.delete,
+      &.empty {
+        font-size: 14px;
+        border-right: none;
       }
-      &:nth-child(2),
-      &:nth-child(5) {
-        background: darken($bg, 4%);
+      &.zero,
+      &.point {
+        border-bottom: none;
       }
-      &:nth-child(3),
-      &:nth-child(6),
-      &:nth-child(9) {
-        background: darken($bg, 4 * 2%);
-      }
-      &:nth-child(4),
-      &:nth-child(7),
-      &:nth-child(10) {
-        background: darken($bg, 4 * 3%);
-      }
-      &:nth-child(8),
-      &:nth-child(11),
-      &:nth-child(13) {
-        background: darken($bg, 4 * 4%);
-      }
-      &:nth-child(14) {
-        background: darken($bg, 4 * 5%);
-      }
-      &:nth-child(12) {
-        background: darken($bg, 4 * 6%);
-        // background: $color-main;
-      }
+      // $bg: #f2f2f2;
+      // &:nth-child(1) {
+      //   background: $bg;
+      // }
+      // &:nth-child(2),
+      // &:nth-child(5) {
+      //   background: darken($bg, 4%);
+      // }
+      // &:nth-child(3),
+      // &:nth-child(6),
+      // &:nth-child(9) {
+      //   background: darken($bg, 4 * 2%);
+      // }
+      // &:nth-child(4),
+      // &:nth-child(7),
+      // &:nth-child(10) {
+      //   background: darken($bg, 4 * 3%);
+      // }
+      // &:nth-child(8),
+      // &:nth-child(11),
+      // &:nth-child(13) {
+      //   background: darken($bg, 4 * 4%);
+      // }
+      // &:nth-child(14) {
+      //   background: darken($bg, 4 * 5%);
+      // }
+      // &:nth-child(12) {
+      //   background: $color-main;
+      //   // background: $color-main;
+      // }
     }
   }
 }

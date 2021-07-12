@@ -1,7 +1,7 @@
 <template>
   <div>
     <label class="formItem">
-      <span class="name">{{ fieldName }}</span>
+      <span class="name"><Icon name="beizhu" />{{ fieldName }}</span>
       <input
         type="text"
         :value="value"
@@ -30,14 +30,24 @@ export default class FormItem extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "~@/assets/style/helper.scss";
 .formItem {
   font-size: 14px;
   display: block;
-  padding-left: 16px;
+  padding-left: 12px;
+  background: #fbfbf1;
   display: flex;
   align-items: center;
   .name {
     padding-right: 16px;
+    display: flex;
+    align-items: center;
+    .icon {
+      width: 24px;
+      height: 24px;
+      color: $color-main;
+      margin-right: 2px;
+    }
   }
   input {
     height: 40px;

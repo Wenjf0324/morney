@@ -13,7 +13,7 @@
       />
     </div>
     <div class="button-wrapper">
-      <Button @click="remove">删除标签</Button>
+      <button @click="remove">删除标签</button>
     </div>
   </Layout>
 </template>
@@ -22,10 +22,9 @@
 import Vue from "vue";
 import { Component } from "vue-property-decorator";
 import FormItem from "../components/Money/FormItem.vue";
-import Button from "../components/Button.vue";
 
 @Component({
-  components: { FormItem, Button },
+  components: { FormItem },
 })
 export default class EditLabel extends Vue {
   //getter
