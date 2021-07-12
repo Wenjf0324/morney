@@ -100,7 +100,6 @@ export default class AddLabel extends Vue {
   font-size: 16px;
 }
 .formItem {
-  display: block;
   padding: 10px 0 10px 16px;
   border-bottom: 1px solid #e6e6e6;
   display: flex;

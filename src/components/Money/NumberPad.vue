@@ -85,7 +85,7 @@ export default class NumberPad extends Vue {
     text-align: right;
   }
   .buttons {
-    background: #fafae7;
+    background: #f2f3f5;
     @extend %clearFix; //继承%clearFix,复制的是选择器 .buttons
     > button {
       $h: 56px;
