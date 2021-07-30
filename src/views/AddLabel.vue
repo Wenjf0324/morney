@@ -45,7 +45,7 @@ import Vue from "vue";
 import labelList from "@/constants/labelList";
 import { Component } from "vue-property-decorator";
 import LabelItem from "@/components/LabelItem.vue";
-import { Dialog } from "vant";
+import { Dialog, Toast } from "vant";
 
 @Component({
   components: { LabelItem },
@@ -67,8 +67,14 @@ export default class AddLabel extends Vue {
       icon: this.selectedIcon,
     });
     if (this.$store.state.createTagError) {
-      window.alert("标签名重复了" || "未知错误");
+      return Dialog.alert({
+        message: "标签名重复了" || "未知错误",
+      });
     } else {
+      Toast({
+        message: "添加成功",
+        position: "top",
+      });
       this.$router.replace("/labels");
     }
   }

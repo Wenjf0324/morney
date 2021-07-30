@@ -1,5 +1,5 @@
 <template>
-  <Layout class-prefix="layout" hide-nav="true">
+  <div class="money">
     <div class="types">
       <Icon class="leftIcon" name="left" @click="$router.replace('/account')" />
       <Tabs :data-source="recordTypeList" :value.sync="record.type" />
@@ -12,10 +12,9 @@
       placeholder="点我写备注..."
       :value.sync="record.notes"
     />
-    <!-- :value="record.notes" @update:value="onUpdateNotes" -->
 
     <NumberPad @update:value="onUpdateAmount" @submit="saveRecord" />
-  </Layout>
+  </div>
 </template>
 
 <script lang="ts">
@@ -27,7 +26,7 @@ import Tabs from "@/components/Tabs.vue";
 import { Component } from "vue-property-decorator";
 import { RecordItem } from "@/custom";
 import recordTypeList from "@/constants/recordTypeList";
-import { Dialog } from "vant";
+import { Dialog, Toast } from "vant";
 
 @Component({
   components: { NumberPad, FormItem, Tags, Tabs },
@@ -66,11 +65,20 @@ export default class Money extends Vue {
         message: "请选择一个标签",
       });
       return;
-      // return window.alert("请选择一个标签");
+    }
+    if (this.record.amount === 0) {
+      Dialog.alert({
+        message: "金额不能为0",
+      });
+      return;
     }
     this.$store.commit("createRecord", this.record);
     if (this.$store.state.createRecordError === null) {
       this.record.notes = "";
+      Toast({
+        message: "保存成功",
+        position: "top",
+      });
       this.$router.replace("/account");
     }
   }
@@ -90,6 +98,11 @@ export default class Money extends Vue {
     left: 50%;
     transform: translate(-50%, -50%);
   }
+}
+.money {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 .types {
   height: 64px;

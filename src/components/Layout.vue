@@ -3,13 +3,13 @@
     <div class="content" :class="classPrefix && `${classPrefix}-content`">
       <slot />
     </div>
-    <Nav :class="{ hide: hideNav === 'true' }" />
+    <Nav />
   </div>
 </template>
 
 <script lang="ts">
 export default {
-  props: ["classPrefix", "hideNav"],
+  props: ["classPrefix"],
   name: "Layout",
 };
 </script>
@@ -23,8 +23,5 @@ export default {
 .content {
   overflow: auto;
   flex-grow: 1; //将剩余空间尽量分配给content容器，实现导航栏始终在底部
-}
-.hide {
-  display: none;
 }
 </style>

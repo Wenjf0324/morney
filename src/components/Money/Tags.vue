@@ -10,7 +10,6 @@
         </div>
         <div class="tag-name">{{ tag.name }}</div>
       </li>
-
       <li id="last" class="new" @click="$router.replace('/labels')">
         <div class="tag-icon"><Icon name="edit" /></div>
         <div class="tag-name">管理</div>
@@ -58,7 +57,7 @@ export default class Tags extends Vue {
     this.$store.commit("fetchTags");
   }
 
-  //选中或取消 tag
+  //选中 tag
   toggle(tag: string) {
     const index = this.selectedTags.indexOf(tag);
     if (index >= 0) {
