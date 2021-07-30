@@ -340,7 +340,7 @@ header {
   }
   .record {
     border-radius: 8px;
-    margin: 0 10px;
+    margin: 0 12px;
     .recordItem {
       @extend %item;
       font-size: 14px;
